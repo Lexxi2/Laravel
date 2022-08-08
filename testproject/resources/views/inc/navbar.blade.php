@@ -25,6 +25,11 @@
               <li><a href="/services">Services</a></li>
               <li><a href="/posts">Blog</a></li>
             </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/post/create">Create Post</a></li>
+            </ul>
+
         </div>
     </div>
 </nav>

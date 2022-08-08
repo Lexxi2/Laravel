@@ -1,0 +1,11 @@
+{
+    "require": {
+        "laravelcollective/html": "^5.4.0",
+        "unisharp/laravel-ckeditor": "^4.7"
+    },
+    "config": {
+        "allow-plugins": {
+            "kylekatarnls/update-helper": true
+        }
+    }
+}
