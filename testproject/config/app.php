@@ -162,7 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
-        // added providers
+        // added new providers
         Collective\Html\HtmlserviceProvider::class,
         Unisharp\Ckeditor\ServiceProvider::class,
 

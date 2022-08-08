@@ -36,6 +36,7 @@ class PostsController extends Controller
         $post = new Post;
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+        $post->user_id =auth()->user()->id;
         $post->save();
 
         return redirect('/posts')->with('success', 'Post Created');
@@ -49,7 +50,31 @@ class PostsController extends Controller
 
     public function edit($id)
     {
+        $post = Post::find($id);
+        return view('posts.edit')->with('post', $post);
+    }
 
+    public function upate(Request $request, $id)
+    {
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+
+        // update Post
+        $post = Post::find($id);
+        $post->title = $request->input('title');
+        $post->body = $request->input('body');
+        $post->save();
+
+        return redirect('/posts')->with('success', 'Post Updated');
+    }
+
+    public function destroy($id)
+    {
+        $post = Post::find($id);
+        $post->delete();
+        return redirect('/posts')->with('success', 'Post Removed');
     }
 
 }
@@ -57,3 +82,4 @@ class PostsController extends Controller
 
 // run this command in the terminal !!
 // php artisan vendor:publish --tag=ckeditor
+// php artisan make:auth
