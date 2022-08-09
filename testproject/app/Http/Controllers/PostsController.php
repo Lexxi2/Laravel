@@ -8,14 +8,13 @@ use DB;
 
 class PostsController extends Controller
 {
-    public function index()
+    public function __construct()
     {
-        // $posts = Post::all();
-        // $post = Post::where('title', 'Post Two')->get();
-        // $posts = DB::select('SELECT * FROM posts');
-        // $posts = Post::orderBy('created_at', 'desc')->take(1)->get();
-        // $posts = Post::orderBy('created_at', 'desc')->get();
-        
+        $this->middleware('auth', ['except' => ['index', 'show']] );
+    }
+
+    public function index()
+    {        
         $posts = Post::orderBy('created_at', 'desc')->paginate(10);
         return view('posts.index')->with('posts', $posts);
     }
@@ -37,6 +36,7 @@ class PostsController extends Controller
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         $post->user_id =auth()->user()->id;
+        $post->user_id = auth()->user()->id;
         $post->save();
 
         return redirect('/posts')->with('success', 'Post Created');
@@ -51,6 +51,11 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
+
+        // Check user id
+        if(auth()->user()->id !== $post->user_id) {
+            return redirect('/posts')->with('error', 'Unauthorized Page');
+        }
         return view('posts.edit')->with('post', $post);
     }
 
@@ -73,13 +78,17 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
+
+        // Check user id
+        if(auth()->user()->id !== $post->user_id) {
+            return redirect('/posts')->with('error', 'Unauthorized Page');
+        }
+
         $post->delete();
         return redirect('/posts')->with('success', 'Post Removed');
     }
-
 }
 
 
 // run this command in the terminal !!
 // php artisan vendor:publish --tag=ckeditor
-// php artisan make:auth
