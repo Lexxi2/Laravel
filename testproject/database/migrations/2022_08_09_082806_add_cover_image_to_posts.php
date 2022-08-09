@@ -13,7 +13,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('posts', function ($table) {
-            $table->integer('user_id');
+            $table->string('cover_image');
         });
     }
 
@@ -25,7 +25,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('posts', function ($table) {
-            $table->dropColumn('user_id');
+            $table->dropColumn('cover_image');
         });
     }
 };
